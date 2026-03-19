@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Bottom Nav Bar Rounded</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    /* Konten utama */
+    main {
+      flex: 1;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    h1 { margin-bottom: 20px; }
+
+    /* Floating Bottom Nav Bar Rounded */
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 500px;
+      height: 70px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 35px; /* setengah dari tinggi untuk rounded penuh */
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .bottom-nav ul {
+      list-style: none;
+      display: flex;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .bottom-nav li {
+      flex: 1;
+      text-align: center;
+    }
+
+    .bottom-nav .nav-link {
+      display: block;
+      text-decoration: none;
+      color: #666;
+      font-size: 0.9rem;
+      padding: 8px 0;
+      transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .bottom-nav .nav-link::before {
+      content: '';
+      width: 24px;
+      height: 24px;
+      background: currentColor;
+      border-radius: 50%;
+      display: block;
+      margin-bottom: 2px;
+      position: relative;
+    }
+
+    .bottom-nav .nav-link:nth-child(1)::before { background: #ff6b6b; }
+    .bottom-nav .nav-link:nth-child(2)::before { background: #4ecdc4; }
+    .bottom-nav .nav-link:nth-child(3)::before { background: #45b7d1; }
+    .bottom-nav .nav-link:nth-child(4)::before { background: #96ceb4; }
+
+    .bottom-nav .nav-link:hover::before,
+    .bottom-nav .nav-link.active::before {
+      transform: scale(1.2);
+      filter: brightness(1.2);
+    }
+
+    .bottom-nav .nav-link:hover,
+    .bottom-nav .nav-link.active {
+      color: #667eea;
+      transform: translateY(-2px);
+    }
+
+    .bottom-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 3px;
+      background: #667eea;
+      border-radius: 2px;
+    }
+
+    /* Responsif: layar kecil */
+    @media (max-width: 480px) {
+      .bottom-nav {
+        width: 95%;
+        height: 60px;
+        border-radius: 30px;
+      }
+      .bottom-nav .nav-link { font-size: 0.8rem; }
+    }
+
+    /* Animasi masuk */
+    .bottom-nav {
+      animation: slideUp 0.5s ease-out 0.2s both;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateX(-50%) translateY(100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>Floating Bottom Nav Bar Rounded</h1>
+    <p>Navigasi ini memiliki bentuk rounded (membulat) dengan efek glassmorphism dan animasi smooth.</p>
+    <p>Desain modern dengan backdrop blur dan shadow yang lembut.</p>
+  </main>
+
+  <!-- Floating Bottom Nav Bar Rounded -->
+  <nav class="bottom-nav">
+    <ul>
+      <li><a href="#" class="nav-link active">Beranda</a></li>
+      <li><a href="#" class="nav-link">Profil</a></li>
+      <li><a href="#" class="nav-link">Galeri</a></li>
+      <li><a href="#" class="nav-link">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.bottom-nav .nav-link');
+      links.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          links.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

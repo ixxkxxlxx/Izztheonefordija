@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom soft pink theme styles */
+
+@layer components {
+  .hero-gradient {
+    background: linear-gradient(135deg, theme(colors.soft-pink.100) 0%, theme(colors.soft-pink.300) 50%, theme(colors.soft-pink.500 / 0.1) 100%);
+  }
+  
+  .card-soft {
+    @apply bg-white/80 backdrop-blur-xs shadow-2xl border border-soft-pink-200 rounded-3xl p-8;
+  }
+  
+  .btn-pink {
+    @apply bg-gradient-to-r from-soft-pink-400 to-soft-pink-500 hover:from-soft-pink-500 hover:to-soft-pink-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105;
+  }
+  
+  .navbar-pink {
+    @apply bg-white/90 backdrop-blur-md border-b border-soft-pink-200 shadow-lg;
+  }
+}
+
+/* Scrollbar styling */
+@layer utilities {
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-soft-pink-50;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-soft-pink-400 rounded-full hover:bg-soft-pink-500;
+  }
+}
+
+/* Responsive text shadows */
+.text-hero {
+  text-shadow: 0 2px 4px rgba(236, 72, 153, 0.3);
+}
+
+/* Mobile Layout Enhancements */
+.mobile-layout {
+  @apply overscroll-none;
+}
+
+.mobile-layout main {
+  @apply -mb-6 md:mb-0; /* Compensate for bottom nav on mobile */
+}
+
+/* Hide desktop nav on mobile */
+@media (max-width: 768px) {
+  .mobile-layout nav:not(.fixed) {
+    @apply hidden;
+  }
+  
+  .mobile-layout .navbar-pink {
+    @apply hidden;
+  }
+  
+  /* Mobile content adjustments */
+  .mobile-layout h1 {
+    @apply text-3xl sm:text-4xl md:text-5xl;
+  }
+  
+  .mobile-layout .hero-gradient {
+    @apply min-h-[70vh];
+  }
+  
+  /* Touch-friendly buttons */
+  .mobile-layout .btn-pink {
+    @apply min-h-14 px-8 text-base py-4;
+  }
+  
+  /* Safe area for iOS */
+  @supports (padding: max(0px)) {
+    .mobile-layout {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+}
+
+/* Bottom nav specific styles */
+x-mobile-nav svg {
+  @apply transition-all duration-200;
+}
+
+x-mobile-nav a:active {
+  @apply scale-95;
+}
+
+/* Smooth page transitions */
+.mobile-layout main {
+  @apply scroll-smooth;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+/* Base transition for root - Fade and slide */
+::view-transition-old(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out,
+             300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+}
+
+::view-transition-new(root) {
+  animation: 300ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in,
+             300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slide-from-right {
+  from { transform: translateX(30px); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slide-to-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-30px); }
+}
+
+/* Preserve static elements */
+.view-transition-navbar {
+    view-transition-name: navbar;
+}
+
+.view-transition-bottom-nav {
+    view-transition-name: bottom-nav;
+}
+
+/* Main content area transition */
+.view-transition-main {
+    view-transition-name: main-content;
+}
+
+/* Navigation Progress Bar */
+#nav-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(to right, #ec4899, #be185d);
+    z-index: 10000;
+    transition: width 0.3s ease-out, opacity 0.5s ease-in;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+}
+
+#nav-progress.loading {
+    width: 90%;
+}
+
+#nav-progress.complete {
+    width: 100%;
+    opacity: 0;
+}
+
+/* Click feedback */
+.click-scale-down {
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.click-scale-down:active, .is-navigating {
+    transform: scale(0.92) !important;
+}
+
