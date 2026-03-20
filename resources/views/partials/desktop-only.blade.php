@@ -1,21 +1,21 @@
-<div class="fixed inset-0 z-[100] hidden md:flex items-center justify-center bg-white dark:bg-background-dark p-6 text-center">
+<div class="fixed inset-0 z-[100] hidden md:flex items-center justify-center bg-white p-6 text-center">
     <div class="max-w-md w-full space-y-8">
         <!-- Decoration -->
         <div class="flex justify-center mb-6">
             <div class="relative">
-                <!-- Desktop Icon SVG (Black in light, Pink in dark) -->
-                <svg class="w-32 h-32 mx-auto text-black dark:text-soft-pink-500 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 64 64">
-                    <rect x="8" y="14" width="48" height="28" rx="4" stroke="currentColor" stroke-width="3" fill="currentColor" fill-opacity="0.05" />
-                    <rect x="18" y="42" width="28" height="4" rx="2" fill="currentColor" opacity="0.12" />
-                    <rect x="26" y="48" width="12" height="3" rx="1.5" fill="currentColor" />
-                    <circle cx="32" cy="47" r="2" fill="currentColor" />
-                    <rect x="20" y="19" width="24" height="12" rx="2" fill="currentColor" opacity="0.07" />
+                <!-- Desktop Icon SVG (Black) -->
+                <svg class="w-32 h-32 mx-auto text-black drop-shadow-lg" fill="none" stroke="black" viewBox="0 0 64 64">
+                    <rect x="8" y="14" width="48" height="28" rx="4" stroke="black" stroke-width="3" fill="white" />
+                    <rect x="18" y="42" width="28" height="4" rx="2" fill="black" opacity="0.12" />
+                    <rect x="26" y="48" width="12" height="3" rx="1.5" fill="black" />
+                    <circle cx="32" cy="47" r="2" fill="black" />
+                    <rect x="20" y="19" width="24" height="12" rx="2" fill="black" opacity="0.07" />
                 </svg>
             </div>
         </div>
 
         <div class="space-y-4">
-            <h1 class="font-serif text-4xl text-soft-pink-800 dark:text-soft-pink-200 leading-tight">Desktop Version Not Supported</h1>
+            <h1 class="font-serif text-4xl text-soft-pink-800 leading-tight">Desktop Version Not Supported</h1>
             <p class="text-soft-pink-600 text-lg font-light leading-relaxed">
                 Untuk pengalaman terbaik, sila buka halaman ini melalui peranti mudah alih anda.
             </p>

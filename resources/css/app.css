@@ -7,11 +7,10 @@
 @layer components {
   .hero-gradient {
     background: linear-gradient(135deg, theme(colors.soft-pink.100) 0%, theme(colors.soft-pink.300) 50%, theme(colors.soft-pink.500 / 0.1) 100%);
-    @apply dark:from-background-dark dark:via-mocha-800 dark:to-background-dark;
   }
   
   .card-soft {
-    @apply bg-white/80 dark:bg-background-dark/80 backdrop-blur-xs shadow-2xl border border-soft-pink-200 dark:border-white/10 rounded-3xl p-8;
+    @apply bg-white/80 backdrop-blur-xs shadow-2xl border border-soft-pink-200 rounded-3xl p-8;
   }
   
   .btn-pink {
@@ -19,7 +18,7 @@
   }
   
   .navbar-pink {
-    @apply bg-white/90 dark:bg-background-dark/95 backdrop-blur-md border-b border-soft-pink-200 dark:border-white/10 shadow-lg;
+    @apply bg-white/90 backdrop-blur-md border-b border-soft-pink-200 shadow-lg;
   }
 }
 

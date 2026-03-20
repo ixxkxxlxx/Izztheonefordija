@@ -16,21 +16,17 @@
     .striped-bg {
         background-image: repeating-linear-gradient(45deg, rgba(239, 57, 118, 0.02) 0px, rgba(239, 57, 118, 0.02) 10px, transparent 10px, transparent 20px);
     }
-    @media (prefers-color-scheme: dark) {
-    .dark\:bg-background-dark {
+    .dark .dark\:bg-background-dark {
         --tw-bg-opacity: 1;
         background-color: #f7f5ed;
-    }
     }
     .italic {
     font-style: italic;
     color: #db2777;
     }
 
-    @media (prefers-color-scheme: dark) {
-    .dark\:bg-slate-800\/80 {
+    .dark .dark\:bg-slate-800\/80 {
         background-color: #e5e7eb;
-    }
     }
 
     .text-elegant-brown {
@@ -38,11 +34,9 @@
     color: #3b312c;
     }
 
-    @media (prefers-color-scheme: dark) {
-    .dark\:bg-slate-900 {
+    .dark .dark\:bg-slate-900 {
         --tw-bg-opacity: 1;
         background-color: #3b312c;
-    }
     }
     .text-primary\/80 {
     color: #ffffff;

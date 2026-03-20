@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="theme-color" content="#fffafb" media="(prefers-color-scheme: light)">
-        <meta name="theme-color" content="#221016" media="(prefers-color-scheme: dark)">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -22,15 +20,6 @@
         @stack('head')
         @stack('styles')
 
-        <script>
-            // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-            if (localStorage.getItem('color-theme') === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        </script>
-
         <style>
             html, body {
                 margin: 0;
@@ -43,20 +32,7 @@
                 background-repeat: no-repeat;
                 background-attachment: fixed;
                 min-height: 100vh;
-                position: relative;
             }
-            
-            @media (prefers-color-scheme: dark) {
-                .bg-wedding-stripes::before {
-                    content: '';
-                    position: fixed;
-                    inset: 0;
-                    background-color: rgba(34, 16, 22, 0.7); /* background-dark with opacity */
-                    z-index: -1;
-                    pointer-events: none;
-                }
-            }
-
             .scallop-l, .scallop-r {
                 display: none;
             }
@@ -74,13 +50,6 @@
                 z-index: 9999;
                 transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
             }
-            
-            @media (prefers-color-scheme: dark) {
-                #splash-screen {
-                    background-color: #221016; /* background-dark */
-                }
-            }
-
             #splash-screen.fade-out {
                 opacity: 0;
                 visibility: hidden;
@@ -100,15 +69,7 @@
                 color: #be185d; /* soft-pink-700 */
                 margin-bottom: 1rem;
                 filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-                transition: color 0.5s ease-in-out;
             }
-            
-            @media (prefers-color-scheme: dark) {
-                .splash-title {
-                    color: #fce7f3; /* soft-pink-100 */
-                }
-            }
-
             .splash-subtitle {
                 font-family: 'Playfair Display', serif;
                 font-size: 1.2rem;
@@ -116,15 +77,7 @@
                 color: #9d174d; /* soft-pink-800 */
                 text-transform: uppercase;
                 opacity: 0.8;
-                transition: color 0.5s ease-in-out;
             }
-
-            @media (prefers-color-scheme: dark) {
-                .splash-subtitle {
-                    color: #fbcfe8; /* soft-pink-200 */
-                }
-            }
-
             .splash-footer {
                 position: absolute;
                 bottom: 2rem;
@@ -209,7 +162,6 @@
         </script>
         @endif
         @include('partials.navbar')
-        @include('partials.theme-toggle')
         
         <!-- Scalloped edges -->
         <div class="fixed inset-y-0 left-0 w-5 md:w-8 scallop-l z-0 pointer-events-none"></div>
@@ -224,12 +176,9 @@
         @include('partials.bottom-nav')
         @include('partials.desktop-only')
 
-        <!-- Background Music Player -->
+        <!-- Background Music Player (YouTube) -->
         <div x-data="musicPlayer()" x-init="init()" class="fixed bottom-28 md:bottom-8 left-6 z-50">
-            <audio id="bg-music" loop preload="auto">
-                <source src="https://cdn.pixabay.com/audio/2025/06/04/audio_690639421c.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+            <div id="youtube-player" class="hidden"></div>
             
             <div class="relative flex flex-col items-center">
                 <!-- Autoplay Unlock Hint -->
@@ -263,81 +212,127 @@
         </div>
 
         <script>
+            // Global YouTube API Ready Callback
+            if (!window.onYouTubeIframeAPIReady) {
+                window.onYouTubeIframeAPIReady = function() {
+                    window.dispatchEvent(new CustomEvent('youtube-api-ready'));
+                };
+            }
+
             function musicPlayer() {
                 return {
                     isPlaying: false,
-                    audio: null,
+                    player: null,
                     showUnlockHint: false,
+                    isReady: false,
                     
                     init() {
-                        this.audio = document.getElementById('bg-music');
-                        if (!this.audio) return;
-
-                        // Set volume to a pleasant level
-                        this.audio.volume = 0.5;
-                        
-                        // Restore state from localStorage
-                        const wasPlaying = localStorage.getItem('music_playing') === 'true';
-                        const savedTime = localStorage.getItem('music_current_time');
-                        
-                        if (savedTime) {
-                            this.audio.currentTime = parseFloat(savedTime);
+                        // Load YouTube IFrame API script
+                        if (!window.YT) {
+                            const tag = document.createElement('script');
+                            tag.src = "https://www.youtube.com/iframe_api";
+                            const firstScriptTag = document.getElementsByTagName('script')[0];
+                            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
                         }
 
-                        // Try to play immediately if it was playing before
-                        if (wasPlaying) {
-                            this.play().catch(() => {
-                                // If autoplay was blocked, show hint
-                                this.showUnlockHint = true;
-                            });
+                        // Listen for API ready
+                        window.addEventListener('youtube-api-ready', () => {
+                            if (!this.player) this.initPlayer();
+                        });
+
+                        // If API is already loaded
+                        if (window.YT && window.YT.Player) {
+                            setTimeout(() => this.initPlayer(), 100);
                         }
 
-                        // Periodically save time
-                        setInterval(() => {
-                            if (!this.audio.paused) {
-                                localStorage.setItem('music_current_time', this.audio.currentTime);
-                            }
-                        }, 1000);
-
-                        // Unlock audio on first interaction if it was playing
+                        // User interaction unlock (required for mobile/autoplay)
                         const unlockHandler = () => {
-                            if (localStorage.getItem('music_playing') === 'true' && this.audio.paused) {
+                            if (localStorage.getItem('music_playing') === 'true' && this.isReady && !this.isPlaying) {
                                 this.play();
                             }
-                            // Always hide hint after any interaction
+                            // Always hide hint after interaction
                             this.showUnlockHint = false;
                         };
 
                         document.addEventListener('click', unlockHandler, { once: true });
                         document.addEventListener('touchstart', unlockHandler, { once: true });
+                    },
 
-                        // Handle audio events for state tracking
-                        this.audio.onplay = () => {
-                            this.isPlaying = true;
-                            this.showUnlockHint = false;
-                            localStorage.setItem('music_playing', 'true');
-                        };
-                        this.audio.onpause = () => {
-                            this.isPlaying = false;
-                            localStorage.setItem('music_playing', 'false');
-                        };
+                    initPlayer() {
+                        this.player = new YT.Player('youtube-player', {
+                            height: '0',
+                            width: '0',
+                            videoId: 'M6JqLWOdo6s',
+                            playerVars: {
+                                'autoplay': 0,
+                                'controls': 0,
+                                'loop': 1,
+                                'playlist': 'M6JqLWOdo6s', // Required for looping a single video
+                                'playsinline': 1,
+                                'enablejsapi': 1,
+                                'origin': window.location.origin
+                            },
+                            events: {
+                                'onReady': (event) => {
+                                    this.isReady = true;
+                                    
+                                    // Set volume
+                                    this.player.setVolume(50);
+
+                                    // Restore state
+                                    const wasPlaying = localStorage.getItem('music_playing') === 'true';
+                                    const savedTime = localStorage.getItem('music_current_time');
+                                    
+                                    if (savedTime) {
+                                        this.player.seekTo(parseFloat(savedTime), true);
+                                    }
+
+                                    if (wasPlaying) {
+                                        this.play().catch(() => {
+                                            this.showUnlockHint = true;
+                                        });
+                                    }
+
+                                    // Periodic time save
+                                    setInterval(() => {
+                                        if (this.isPlaying && this.player && this.player.getCurrentTime) {
+                                            localStorage.setItem('music_current_time', this.player.getCurrentTime());
+                                        }
+                                    }, 2000);
+                                },
+                                'onStateChange': (event) => {
+                                    if (event.data == YT.PlayerState.PLAYING) {
+                                        this.isPlaying = true;
+                                        localStorage.setItem('music_playing', 'true');
+                                        this.showUnlockHint = false;
+                                    } else if (event.data == YT.PlayerState.PAUSED) {
+                                        this.isPlaying = false;
+                                        localStorage.setItem('music_playing', 'false');
+                                    } else if (event.data == YT.PlayerState.ENDED) {
+                                        this.isPlaying = false;
+                                        // Auto replay logic handled by 'loop' parameter, but just in case:
+                                        this.player.playVideo();
+                                    }
+                                }
+                            }
+                        });
                     },
 
                     toggle() {
-                        if (this.audio.paused) {
-                            this.play();
+                        if (!this.isReady) return;
+                        if (this.isPlaying) {
+                            this.player.pauseVideo();
                         } else {
-                            this.audio.pause();
+                            this.play();
                         }
                     },
 
                     async play() {
+                        if (!this.isReady) return;
                         try {
-                            await this.audio.play();
-                            this.isPlaying = true;
+                            this.player.playVideo();
                         } catch (error) {
                             console.log('Playback prevented:', error);
-                            throw error;
                         }
                     }
                 }

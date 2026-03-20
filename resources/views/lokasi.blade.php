@@ -21,29 +21,21 @@
     .font-display {
         font-family: 'Newsreader', serif;
     }
-    @media (prefers-color-scheme: dark) {
-    .dark\:text-slate-200 {
+    .dark .dark\:text-slate-200 {
         --tw-text-opacity: 1;
         color: #db2777;
     }
-    }
-    @media (prefers-color-scheme: dark) {
-    .dark\:bg-\[\#221016\] {
+    .dark .dark\:bg-\[\#221016\] {
         --tw-bg-opacity: 1;
         background-color: #f7f5ed;
     }
-    }
-    @media (prefers-color-scheme: dark) {
-    .dark\:text-slate-400 {
+    .dark .dark\:text-slate-400 {
         --tw-text-opacity: 1;
         color: #3b312c;
     }
-    }
-    @media (prefers-color-scheme: dark) {
-    .dark\:text-slate-300 {
+    .dark .dark\:text-slate-300 {
         --tw-text-opacity: 1;
         color: #3b312c;
-    }
     }
 
 </style>

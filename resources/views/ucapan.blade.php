@@ -26,23 +26,21 @@
         --tw-text-opacity: 1;
         color: #3b312c;
     }
-    @media (prefers-color-scheme: dark) {
-        .dark-mode-bg {
+        .dark .dark-mode-bg {
             background-color: #221016;
         }
-        .dark-mode-card {
+        .dark .dark-mode-card {
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(239, 57, 118, 0.2);
         }
-        .dark\:bg-\[\#221016\] {
+        .dark .dark\:bg-\[\#221016\] {
             --tw-bg-opacity: 1;
             background-color: #221016;
         }
-        .dark\:text-slate-400 {
+        .dark .dark\:text-slate-400 {
             --tw-text-opacity: 1;
             color: #a1a1aa;
         }
-    }
     .btn-pink-custom {
         background-color: #ef3976;
         color: white;
@@ -53,33 +51,25 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(239, 57, 118, 0.3);
     }
-    @media (prefers-color-scheme: dark) {
-    .dark\:bg-\[\#221016\] {
+    .dark .dark\:bg-\[\#221016\] {
         --tw-bg-opacity: 1;
         background-color: #f7f5ed;
     }
-    }
-    @media (prefers-color-scheme: dark) {
-    .dark\:text-slate-400 {
+    .dark .dark\:text-slate-400 {
         --tw-text-opacity: 1;
         color: #3b312c;
-    }
     }
     .text-\[\#3b312c\] {
     --tw-text-opacity: 1;
     color: #db2777;
     }
-    @media (prefers-color-scheme: dark) {
-    .dark\:text-gray-100 {
+    .dark .dark\:text-gray-100 {
         --tw-text-opacity: 1;
         color: #3b312c;
     }
-    }
-    @media (prefers-color-scheme: dark) {
-    .dark\:text-pink-100 {
+    .dark .dark\:text-pink-100 {
         --tw-text-opacity: 1;
         color: #db2777;
-    }
     }
 </style>
 
