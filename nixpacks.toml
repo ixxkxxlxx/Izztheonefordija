@@ -1,2 +1,15 @@
 [phases.setup]
-nixPkgs = ["...", "php8.5", "php8.5Packages.composer"] 
+nixPkgs = ["php", "composer", "nodejs"]
+
+[phases.install]
+cmds = ["composer install --frozen-lockfile --no-dev"]
+
+[phases.build]
+cmds = [
+    "npm install && npm run build",
+    "php artisan optimize",
+    "php artisan migrate --force"
+]
+
+[variables]
+NIXPACKS_PHP_VERSION = "8.4"
