@@ -17,7 +17,7 @@
         <div class="space-y-4">
             <h1 class="font-serif text-4xl text-soft-pink-800 leading-tight">Desktop Version Not Supported</h1>
             <p class="text-soft-pink-600 text-lg font-light leading-relaxed">
-                Untuk pengalaman terbaik, sila akses sistem ini melalui peranti mudah alih anda.
+                Untuk pengalaman terbaik, sila buka halaman ini melalui peranti mudah alih anda.
             </p>
         </div>
 
