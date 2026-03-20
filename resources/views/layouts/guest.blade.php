@@ -176,6 +176,97 @@
         @include('partials.bottom-nav')
         @include('partials.desktop-only')
 
+        <!-- Background Music Player -->
+        <div x-data="musicPlayer()" x-init="init()" class="fixed bottom-28 md:bottom-8 left-6 z-50">
+            <audio id="bg-music" loop>
+                <source src="https://assets.mixkit.co/music/preview/mixkit-beautiful-dream-493.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            
+            <button @click="toggle()" 
+                class="w-12 h-12 bg-[#ef3976] rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-transform focus:outline-none ring-2 ring-white/20"
+                :class="{'animate-pulse': isPlaying}">
+                <!-- Music Note/Pause Icon -->
+                <svg x-show="!isPlaying" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                </svg>
+                <svg x-show="isPlaying" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </button>
+        </div>
+
+        <script>
+            function musicPlayer() {
+                return {
+                    isPlaying: false,
+                    audio: null,
+                    
+                    init() {
+                        this.audio = document.getElementById('bg-music');
+                        
+                        // Restore state from localStorage
+                        const wasPlaying = localStorage.getItem('music_playing') === 'true';
+                        const savedTime = localStorage.getItem('music_current_time');
+                        
+                        if (savedTime) {
+                            this.audio.currentTime = parseFloat(savedTime);
+                        }
+
+                        // Try to play immediately (sometimes works if navigating)
+                        if (wasPlaying) {
+                            this.play();
+                        }
+
+                        // Periodically sync UI state and save time
+                        setInterval(() => {
+                            this.isPlaying = !this.audio.paused;
+                            if (this.isPlaying) {
+                                localStorage.setItem('music_current_time', this.audio.currentTime);
+                            }
+                        }, 500);
+
+                        // Unlock audio on first interaction if it was playing
+                        const autoPlayHandler = () => {
+                            if (localStorage.getItem('music_playing') === 'true' && this.audio.paused) {
+                                this.play();
+                            }
+                        };
+
+                        document.addEventListener('click', autoPlayHandler, { once: true });
+                        document.addEventListener('touchstart', autoPlayHandler, { once: true });
+
+                        // Handle audio events for state tracking
+                        this.audio.onplay = () => {
+                            this.isPlaying = true;
+                            localStorage.setItem('music_playing', 'true');
+                        };
+                        this.audio.onpause = () => {
+                            this.isPlaying = false;
+                            localStorage.setItem('music_playing', 'false');
+                        };
+                    },
+
+                    toggle() {
+                        if (this.audio.paused) {
+                            this.play();
+                        } else {
+                            this.audio.pause();
+                        }
+                    },
+
+                    play() {
+                        const playPromise = this.audio.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(error => {
+                                console.log('Autoplay prevented or failed:', error);
+                            });
+                        }
+                    }
+                }
+            }
+        </script>
+
         <script>
             // Navigation feedback and progress bar
             document.addEventListener('click', (e) => {

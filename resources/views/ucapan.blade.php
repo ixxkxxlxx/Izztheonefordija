@@ -183,7 +183,7 @@
                                             <span class="font-semibold text-[#ef3976] dark:text-pink-100">{{ $message->name }}</span>
                                         </div>
                                         <div class="mt-1 text-gray-700 dark:text-gray-100">{{ $message->message }}</div>
-                                        <div class="mt-2 text-xs text-slate-400">{{ $message->created_at->format('d M Y, H:i') }}</div>
+                                        <div class="mt-2 text-xs text-slate-400">{{ $message->created_at->format('d/m/Y, h:i A') }}</div>
                                     </div>
                                 </div>
                             </div>

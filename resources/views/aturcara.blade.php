@@ -154,7 +154,7 @@
                     <div class="absolute -left-4 top-1/2 -translate-y-1/2 w-4 h-[1px] bg-primary/20"></div>
                     <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 rounded-xl border border-primary/5 shadow-sm hover:border-primary/20 transition-all duration-300">
                         <h3 class="text-lg text-elegant-brown dark:text-soft-pink leading-tight">Majlis Bersurai</h3>
-                        <p class="text-[11px] uppercase tracking-widest text-primary/40 mt-2 italic font-display">Terima kasih atas kehadiran</p>
+                        <p class="text-[11px] uppercase tracking-widest text-primary/40 mt-2 italic font-display">Terima kasih atas kehadiran anda</p>
                     </div>
                 </div>
             </div>
