@@ -37,8 +37,30 @@
     .pb-24 {
     padding-bottom: 0rem;
     }
+
+    /* --- Background Pattern Added --- */
+    .pattern-bg {
+        position: fixed;
+        z-index: 10;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image:
+            repeating-radial-gradient(circle at 20px 20px, #fff7fa 0, #fff7fa 1.5px, transparent 2.5px, transparent 40px),
+            repeating-radial-gradient(circle at 60px 90px, #ffeef5 0, #ffeef5 1px, transparent 2px, transparent 30px);
+        opacity: 0.25;
+        pointer-events: none;
+        /* A hint of color for romance! */
+    }
+    .dark .pattern-bg {
+        background-image:
+            repeating-radial-gradient(circle at 20px 20px, #ef397680 0, #ef397680 1.5px, transparent 2.5px, transparent 40px),
+            repeating-radial-gradient(circle at 60px 90px, #ef397640 0, #ef397640 1px, transparent 2px, transparent 30px);
+        opacity: 0.15;
+    }
 </style>
 
+<div class="pattern-bg"></div>
 <div class="flex-1 w-full flex flex-col bg-[#88786F] dark:bg-[#221016] font-display text-slate-900 dark:text-slate-100 relative z-20" 
      x-data="countdownTimer('2026-04-05T00:00:00')" 
      x-init="start()">

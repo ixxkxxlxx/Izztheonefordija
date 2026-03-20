@@ -177,9 +177,9 @@
         @include('partials.desktop-only')
 
         <!-- Background Music Player (YouTube) -->
-        <div x-data="musicPlayer()" x-init="init()" class="fixed bottom-28 md:bottom-8 left-6 z-50">
+        <!-- Play/Pause button moved to the top right corner -->
+        <div x-data="musicPlayer()" x-init="init()" class="fixed top-6 right-6 md:top-8 md:right-10 z-50">
             <div id="youtube-player" class="hidden"></div>
-            
             <div class="relative flex flex-col items-center">
                 <!-- Autoplay Unlock Hint -->
                 <div x-show="showUnlockHint" 
@@ -189,22 +189,25 @@
                     x-transition:leave="transition ease-in duration-200"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-4"
-                    class="absolute bottom-16 left-0 whitespace-nowrap bg-white/90 backdrop-blur-sm px-4 py-2 rounded-2xl shadow-xl border border-[#ef3976]/20 text-[#ef3976] text-xs font-bold animate-bounce-slow">
+                    class="absolute -bottom-12 right-0 left-auto bg-white/90 backdrop-blur-sm px-4 py-2 rounded-2xl shadow-xl border border-[#ef3976]/20 text-[#ef3976] text-xs font-bold animate-bounce-slow whitespace-nowrap">
                     Tap to play music <span class="ml-1">🎵</span>
                 </div>
-
                 <button @click="toggle()" 
                     class="w-12 h-12 bg-[#ef3976] rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all focus:outline-none ring-4 ring-white/30"
-                    :class="{'animate-pulse-slow': isPlaying, 'opacity-80': !isPlaying}">
-                    <!-- Music Note/Pause Icon -->
+                    :class="{'animate-pulse-slow': isPlaying, 'opacity-80': !isPlaying}"
+                    aria-label="Toggle background music"
+                >
                     <template x-if="!isPlaying">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                        <!-- Play Icon: Larger and visually prominent for top-right placement -->
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
                         </svg>
                     </template>
                     <template x-if="isPlaying">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <!-- Pause Icon: Modern two-bar style -->
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                            <rect x="6" y="5" width="4" height="14" rx="1.5"/>
+                            <rect x="14" y="5" width="4" height="14" rx="1.5"/>
                         </svg>
                     </template>
                 </button>
@@ -262,12 +265,12 @@
                         this.player = new YT.Player('youtube-player', {
                             height: '0',
                             width: '0',
-                            videoId: 'M6JqLWOdo6s',
+                            videoId: 'Nc6tFJWHci8',
                             playerVars: {
                                 'autoplay': 0,
                                 'controls': 0,
                                 'loop': 1,
-                                'playlist': 'M6JqLWOdo6s', // Required for looping a single video
+                                'playlist': 'Nc6tFJWHci8', // Required for looping a single video
                                 'playsinline': 1,
                                 'enablejsapi': 1,
                                 'origin': window.location.origin
@@ -276,8 +279,9 @@
                                 'onReady': (event) => {
                                     this.isReady = true;
                                     
-                                    // Set volume
+                                    // Set volume and playback rate
                                     this.player.setVolume(50);
+                                    this.player.setPlaybackRate(0.9); // Slowed effect
 
                                     // Restore state
                                     const wasPlaying = localStorage.getItem('music_playing') === 'true';
@@ -305,6 +309,8 @@
                                         this.isPlaying = true;
                                         localStorage.setItem('music_playing', 'true');
                                         this.showUnlockHint = false;
+                                        // Ensure playback rate is maintained
+                                        this.player.setPlaybackRate(0.9);
                                     } else if (event.data == YT.PlayerState.PAUSED) {
                                         this.isPlaying = false;
                                         localStorage.setItem('music_playing', 'false');
