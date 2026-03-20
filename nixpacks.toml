@@ -7,9 +7,9 @@ cmds = ["composer install --frozen-lockfile --no-dev"]
 [phases.build]
 cmds = [
     "npm install && npm run build",
-    "php artisan optimize",
-    "php artisan migrate --force"
+    "php artisan optimize"
 ]
+
 
 [variables]
 NIXPACKS_PHP_VERSION = "8.4"
