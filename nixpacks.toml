@@ -1,0 +1,2 @@
+[phases.setup]
+nixPkgs = ["...", "php8.5", "php8.5Packages.composer"] 
