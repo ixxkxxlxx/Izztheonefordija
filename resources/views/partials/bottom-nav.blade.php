@@ -16,10 +16,10 @@
     }
 </style>
 
-<nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-lg bg-white/80 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-50 rounded-[2rem] overflow-hidden transition-all duration-500 ease-in-out view-transition-bottom-nav">
+<nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-lg bg-white/80 dark:bg-background-dark/80 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-50 rounded-[2rem] overflow-hidden transition-all duration-500 ease-in-out view-transition-bottom-nav">
     <div class="px-2">
         <div class="flex justify-around items-center h-16">
-            <a href="{{ route('home') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('home') ? 'text-soft-pink-600 bg-soft-pink-50/50 rounded-2xl' : 'text-gray-500 hover:text-soft-pink-400' }}">
+            <a href="{{ route('home') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('home') ? 'text-soft-pink-600 dark:text-soft-pink-300 bg-soft-pink-50/50 dark:bg-soft-pink-900/40 rounded-2xl' : 'text-gray-500 dark:text-gray-400 hover:text-soft-pink-400 dark:hover:text-soft-pink-300' }}">
                 <div class="relative {{ request()->routeIs('home') ? 'scale-110' : '' }} transition-transform duration-300">
                     <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
@@ -27,7 +27,7 @@
                 </div>
                 <span class="truncate">Utama</span>
             </a>
-            <a href="{{ route('lokasi') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('lokasi') ? 'text-soft-pink-600 bg-soft-pink-50/50 rounded-2xl' : 'text-gray-500 hover:text-soft-pink-400' }}">
+            <a href="{{ route('lokasi') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('lokasi') ? 'text-soft-pink-600 dark:text-soft-pink-300 bg-soft-pink-50/50 dark:bg-soft-pink-900/40 rounded-2xl' : 'text-gray-500 dark:text-gray-400 hover:text-soft-pink-400 dark:hover:text-soft-pink-300' }}">
                 <div class="relative {{ request()->routeIs('lokasi') ? 'scale-110' : '' }} transition-transform duration-300">
                     <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8.307 8.307 0 1111.314 0z"></path>
@@ -45,7 +45,7 @@
                     </div>
                 </a>
             </div>
-            <a href="{{ route('aturcara') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('aturcara') ? 'text-soft-pink-600 bg-soft-pink-50/50 rounded-2xl' : 'text-gray-500 hover:text-soft-pink-400' }}">
+            <a href="{{ route('aturcara') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('aturcara') ? 'text-soft-pink-600 dark:text-soft-pink-300 bg-soft-pink-50/50 dark:bg-soft-pink-900/40 rounded-2xl' : 'text-gray-500 dark:text-gray-400 hover:text-soft-pink-400 dark:hover:text-soft-pink-300' }}">
                 <div class="relative {{ request()->routeIs('aturcara') ? 'scale-110' : '' }} transition-transform duration-300">
                     <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -53,7 +53,7 @@
                 </div>
                 <span class="truncate">Aturcara</span>
             </a>
-            <a href="{{ route('ucapan.index') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('ucapan.*') ? 'text-soft-pink-600 bg-soft-pink-50/50 rounded-2xl' : 'text-gray-500 hover:text-soft-pink-400' }}">
+            <a href="{{ route('ucapan.index') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('ucapan.*') ? 'text-soft-pink-600 dark:text-soft-pink-300 bg-soft-pink-50/50 dark:bg-soft-pink-900/40 rounded-2xl' : 'text-gray-500 dark:text-gray-400 hover:text-soft-pink-400 dark:hover:text-soft-pink-300' }}">
                 <div class="relative {{ request()->routeIs('ucapan.*') ? 'scale-110' : '' }} transition-transform duration-300">
                     <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 4.418 9 8z"></path>
@@ -62,7 +62,7 @@
                 <span class="truncate">Ucapan</span>
             </a>
             @auth
-            <a href="{{ route('dashboard') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('dashboard') ? 'text-soft-pink-600 bg-soft-pink-50/50 rounded-2xl' : 'text-gray-500 hover:text-soft-pink-400' }}">
+            <a href="{{ route('dashboard') }}" class="flex-1 flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium transition-all duration-300 p-2 {{ request()->routeIs('dashboard') ? 'text-soft-pink-600 dark:text-soft-pink-300 bg-soft-pink-50/50 dark:bg-soft-pink-900/40 rounded-2xl' : 'text-gray-500 dark:text-gray-400 hover:text-soft-pink-400 dark:hover:text-soft-pink-300' }}">
                 <div class="relative {{ request()->routeIs('dashboard') ? 'scale-110' : '' }} transition-transform duration-300">
                     <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
